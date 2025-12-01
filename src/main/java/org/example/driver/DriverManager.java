@@ -3,8 +3,13 @@ package org.example.driver;
 import org.openqa.selenium.WebDriver;
 
 public class DriverManager {
-    //Init variable ThreadLocal
+
+    //Use ThreadLocal to manage driver for parallel execution
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+
+    private DriverManager() {
+        // Private constructor to prevent instantiation
+    }
 
     public static void setDriver(WebDriver driverInstance){
         driver.set(driverInstance);

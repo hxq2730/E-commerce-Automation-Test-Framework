@@ -1,20 +1,18 @@
 package org.example.helpers;
 
+import org.example.constants.FrameworkConstants;
+
 import java.io.FileInputStream;
 import java.util.Properties;
 
 public class PropertiesHelpers {
     private static Properties properties;
-    private static String linkFile;
-    private static FileInputStream file;
-
 
     //Init and load file config
     public static Properties loadAllFiles(){
         properties = new Properties();
         try{
-            linkFile = System.getProperty("user.dir") + "/src/test/resources/config.properties";
-            file = new FileInputStream(linkFile);
+            FileInputStream file = new FileInputStream(FrameworkConstants.PROPERTIES_FILE_PATH);
             properties.load(file);
             file.close();
 

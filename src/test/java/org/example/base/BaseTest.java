@@ -1,71 +1,94 @@
 package org.example.base;
 
+import io.qameta.allure.testng.AllureTestNg;
+import org.example.constants.FrameworkConstants;
 import org.example.driver.DriverManager;
+import org.example.listeners.TestListener;
+import org.example.utils.LogUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
+@Listeners({AllureTestNg.class, TestListener.class})
 public class BaseTest {
     protected WebDriverWait wait;
 
     @BeforeMethod
     @Parameters({"browser"})
     public void createDriver(@Optional("chrome") String browserName) {
-        System.out.println("Start: Initializing browser: " + browserName);
-        WebDriver tmpDriver;
 
-        if (browserName.equalsIgnoreCase("chrome")) {
-            ChromeOptions options = new ChromeOptions();
-            Map<String, Object> prefs = new HashMap<String, Object>();
-
-            //Turn of Save password bundle
-            prefs.put("credentials_enable_service", false);
-            prefs.put("profile.password_manager_enabled", false);
-
-            //Turn off Password Leak Detection
-            prefs.put("profile.password_manager_leak_detection", false);
-
-            options.setExperimentalOption("prefs", prefs);
-
-            //Turn off "Chrome is being controlled by automated test software"
-            options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
-
-            //options.addArguments("--incognito");
-            //options.addArguments("--headless=new");
-            //options.addArguments("--window-size=1920,1080");
-
-            tmpDriver = new ChromeDriver(options);
-        } else if (browserName.equalsIgnoreCase("firefox")) {
-            tmpDriver = new FirefoxDriver();
-        } else if (browserName.equalsIgnoreCase("edge")) {
-            tmpDriver = new EdgeDriver();
-        } else {
-            throw new RuntimeException("Browser not supported: " + browserName);
+        // 1. If XML parameter is missing, read from Config file
+        if (browserName == null || browserName.equalsIgnoreCase("chrome")) {
+            String configBrowser = FrameworkConstants.BROWSER;
+            if (configBrowser != null && !configBrowser.isEmpty()) {
+                browserName = configBrowser;
+            }
         }
 
-        DriverManager.setDriver(tmpDriver);
+        LogUtils.info("Initializing browser: " + browserName);
+        WebDriver driver = setupBrowser(browserName);
 
+        // 2. Set driver to ThreadLocal
+        DriverManager.setDriver(driver);
+
+        // 3. Maximize and Setup Timeouts via DriverManager (not direct driver)
         DriverManager.getDriver().manage().window().maximize();
-        DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        DriverManager.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
+        DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
+        DriverManager.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(FrameworkConstants.WAIT_PAGE_LOADED));
 
-        wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(10));
     }
+
 
     @AfterMethod
     public void closeDriver(){
-        System.out.println("End: Closing browser");
+        LogUtils.info("Closing browser...");
         DriverManager.quit();
+    }
+
+    // Helper method to init driver based on name
+    private WebDriver setupBrowser(String browserName) {
+        WebDriver driver;
+        switch (browserName.toLowerCase()) {
+            case "chrome":
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--disable-notifications");
+                options.addArguments("--remote-allow-origins=*");
+                // options.addArguments("--headless=new"); // Uncomment for CI/CD
+                //options.addArguments("--window-size=1920,1080");
+                //options.addArguments("--incognito");
+                //Turn off "Chrome is being controlled by automated test software"
+                options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+
+                Map<String, Object> prefs = new HashMap<String, Object>();
+                //Turn of Save password bundle
+                prefs.put("credentials_enable_service", false);
+                prefs.put("profile.password_manager_enabled", false);
+
+                //Turn off Password Leak Detection
+                prefs.put("profile.password_manager_leak_detection", false);
+
+                options.setExperimentalOption("prefs", prefs);
+
+                driver = new ChromeDriver(options);
+
+                break;
+            case "firefox":
+                driver = new FirefoxDriver();
+                break;
+            case "edge":
+                driver = new EdgeDriver();
+                break;
+            default:
+                throw new IllegalArgumentException("Browser not supported: " + browserName);
+        }
+        return driver;
     }
 }

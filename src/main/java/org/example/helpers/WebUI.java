@@ -25,6 +25,16 @@ public class WebUI {
         }
     }
 
+    public static void waitForElementInvisible(By by){
+        try {
+            WebDriverWait wait = new WebDriverWait(getDriver(),
+                    Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+        } catch (Throwable error){
+            LogUtils.error("Timeout waiting for element invisible." + error.getMessage());
+        }
+    }
+
     public static void waitForElementClickable(By by) {
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
@@ -185,6 +195,14 @@ public class WebUI {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    // Get HTML5 Validation Message (The bubble popup)
+    public static String getHTML5ValidationMessage(By by) {
+        waitForElementVisible(by);
+        String validationMessage = getDriver().findElement(by).getAttribute("validationMessage");
+        LogUtils.info("HTML5 Validation Message: " + validationMessage);
+        return validationMessage;
     }
 
     // --- NEW VERIFICATION METHODS (For Assertions) ---

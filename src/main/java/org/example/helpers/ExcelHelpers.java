@@ -42,28 +42,9 @@ public class ExcelHelpers {
     public String getCellData(int rowNum, int colNum) {
         try {
             cell = sheet.getRow(rowNum).getCell(colNum);
-            String cellData = null;
-            switch (cell.getCellType()) {
-                case STRING:
-                    cellData = cell.getStringCellValue();
-                    break;
-                case NUMERIC:
-                    cellData = String.valueOf(cell.getNumericCellValue());
-                    break;
-                case BOOLEAN:
-                    cellData = Boolean.toString(cell.getBooleanCellValue());
-                    break;
-                case BLANK:
-                    cellData = "";
-                    break;
-                case FORMULA:
-                    cellData = cell.getCellFormula();
-                    break;
-                default:
-                    cellData = "";
-                    break;
-            }
-            return cellData;
+            DataFormatter formatter = new DataFormatter();
+
+            return formatter.formatCellValue(cell);
         } catch (Exception e) {
             return "";
         }

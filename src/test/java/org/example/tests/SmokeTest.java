@@ -13,7 +13,7 @@ public class SmokeTest extends BaseTest {
         LogUtils.info("Starting Smoke Test...");
 
         // Open URL from Config
-        WebUI.openURL(FrameworkConstants.URL_CMS);
+        WebUI.openURL(FrameworkConstants.URL_CMS_USER);
 
         // Simple assertion to verify Log & Report
         WebUI.sleep(2);

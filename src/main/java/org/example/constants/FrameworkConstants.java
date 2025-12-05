@@ -20,7 +20,8 @@ public class FrameworkConstants {
 
     // Browser Info (Read from Config)
     public static final String BROWSER = PropertiesHelpers.getValue("browser");
-    public static final String URL_CMS = PropertiesHelpers.getValue("url");
+    public static final String URL_CMS_USER = PropertiesHelpers.getValue("url_user");
+    public static final String URL_CMS_ADMIN = PropertiesHelpers.getValue("url_admin");
     // Timeouts
     public static final int WAIT_EXPLICIT = 10;
     public static final int WAIT_PAGE_LOADED = 30;

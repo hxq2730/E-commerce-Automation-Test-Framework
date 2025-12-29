@@ -5,6 +5,7 @@ import org.example.constants.FrameworkConstants;
 import org.example.driver.DriverManager;
 import org.example.listeners.TestListener;
 import org.example.utils.LogUtils;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -40,7 +41,7 @@ public class BaseTest {
         DriverManager.setDriver(driver);
 
         // 3. Maximize and Setup Timeouts via DriverManager (not direct driver)
-        DriverManager.getDriver().manage().window().maximize();
+        //DriverManager.getDriver().manage().window().maximize();
         DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
         DriverManager.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(FrameworkConstants.WAIT_PAGE_LOADED));
 
@@ -96,7 +97,11 @@ public class BaseTest {
                 options.setExperimentalOption("prefs", prefs);
 
                 driver = new ChromeDriver(options);
-
+                if (System.getenv("CI") != null) {
+                    driver.manage().window().setSize(new Dimension(1920, 1080));
+                } else {
+                    driver.manage().window().maximize();
+                }
                 break;
             case "firefox":
                 driver = new FirefoxDriver();

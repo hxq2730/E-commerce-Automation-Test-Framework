@@ -1,4 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","55494","DDT: Checkout with multiple data sets","High Speed Suite","Mon Dec 29 13:48:48 UTC 2025","passed","Mon Dec 29 13:49:43 UTC 2025","org.example.tests.CheckoutTest","Run on Chrome High Speed","org.example.tests.CheckoutTest","testCheckoutDataDriven"
-"","55259","E2E: Guest User -> Cart -> Force Login -> Checkout -> Order Success","High Speed Suite","Mon Dec 29 13:49:44 UTC 2025","passed","Mon Dec 29 13:50:39 UTC 2025","org.example.tests.CheckoutTest","Run on Chrome High Speed","org.example.tests.CheckoutTest","testGuestCheckoutWithLoginRedirect"
-"","62274","DDT: Checkout with multiple data sets","High Speed Suite","Mon Dec 29 13:47:45 UTC 2025","passed","Mon Dec 29 13:48:47 UTC 2025","org.example.tests.CheckoutTest","Run on Chrome High Speed","org.example.tests.CheckoutTest","testCheckoutDataDriven"

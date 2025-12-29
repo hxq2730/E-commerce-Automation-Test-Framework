@@ -40,8 +40,7 @@ public class BaseTest {
         // 2. Set driver to ThreadLocal
         DriverManager.setDriver(driver);
 
-        // 3. Maximize and Setup Timeouts via DriverManager (not direct driver)
-        //DriverManager.getDriver().manage().window().maximize();
+        // 3. Maximize and Setup Timeouts via DriverManager
         DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
         DriverManager.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(FrameworkConstants.WAIT_PAGE_LOADED));
 
@@ -66,14 +65,12 @@ public class BaseTest {
                 options.addArguments("--remote-allow-origins=*");
 
                 if (System.getenv("CI") != null) {
-                    options.addArguments("--headless=new"); // Chạy ẩn
-                    options.addArguments("--window-size=1920,1080"); // Set kích thước ảo
+                    options.addArguments("--headless=new");
+                    options.addArguments("--window-size=1920,1080");
                     options.addArguments("--no-sandbox");
                     options.addArguments("--disable-dev-shm-usage");
                 }
 
-                // options.addArguments("--headless=new"); // Uncomment for CI/CD
-                //options.addArguments("--window-size=1920,1080");
                 //options.addArguments("--incognito");
 
                 //Turn off "Chrome is being controlled by automated test software"

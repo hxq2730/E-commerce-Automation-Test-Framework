@@ -1,0 +1,1 @@
+[![Selenium Automation CI](https://github.com/hxq2730/E-commerce-Automation-Test-Framework/actions/workflows/main.yml/badge.svg)](https://github.com/hxq2730/E-commerce-Automation-Test-Framework/actions/workflows/main.yml)

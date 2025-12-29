@@ -62,6 +62,14 @@ public class BaseTest {
                 options.addArguments("--disable-notifications");
                 options.addArguments("--disable-infobars");
                 options.addArguments("--remote-allow-origins=*");
+
+                if (System.getenv("CI") != null) {
+                    options.addArguments("--headless=new"); // Chạy ẩn
+                    options.addArguments("--window-size=1920,1080"); // Set kích thước ảo
+                    options.addArguments("--no-sandbox");
+                    options.addArguments("--disable-dev-shm-usage");
+                }
+
                 // options.addArguments("--headless=new"); // Uncomment for CI/CD
                 //options.addArguments("--window-size=1920,1080");
                 //options.addArguments("--incognito");

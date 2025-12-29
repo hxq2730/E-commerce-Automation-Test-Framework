@@ -51,4 +51,3 @@ out/
 *.log
 test-output/
 .idea/
-src/test/resources/config/config.properties

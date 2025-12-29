@@ -22,7 +22,8 @@ public class LoginPage extends CommonPage {
     private static final By INPUT_ERROR_MESSAGE = By.xpath("//strong[contains(text(),\"The email "
             + "field" + " is" + " required when phone is not pres\")]");
     private static final By CHECKBOX_REMEMBER = By.xpath("//span[normalize-space()='Remember Me']");
-    private static final By LINK_FORGOT_PASSWORD = By.xpath("//a[normalize-space()=\"Forgot password?\"]");
+    private static final By LINK_FORGOT_PASSWORD = By.xpath("//a[normalize-space()=\"Forgot " +
+            "password?\"]");
     private static final By LINK_REGISTER = By.xpath("//a[contains(@href, 'users/registration')]");
 
     //Actions
@@ -60,7 +61,7 @@ public class LoginPage extends CommonPage {
         }
     }
 
-    public boolean isInputErrorTextDisplayed(String expectedMessage){
+    public boolean isInputErrorTextDisplayed(String expectedMessage) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(5));
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(INPUT_ERROR_MESSAGE));
@@ -70,6 +71,7 @@ public class LoginPage extends CommonPage {
             return false;
         }
     }
+
     public boolean isHTML5ValidationMessageDisplayed(String expectedKeyword) {
         try {
             WebElement element = DriverManager.getDriver().findElement(INPUT_EMAIL);
@@ -106,7 +108,6 @@ public class LoginPage extends CommonPage {
         WebUI.setText(INPUT_EMAIL, email);
         WebUI.setText(INPUT_PASSWORD, password);
         WebUI.clickElement(BUTTON_LOGIN);
-        //WebUI.waitForPageLoaded();
     }
 
     public LoginPage setRememberMe(boolean isRemember) {

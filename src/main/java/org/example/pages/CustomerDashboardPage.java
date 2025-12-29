@@ -17,7 +17,6 @@ public class CustomerDashboardPage extends CommonPage {
     }
 
     public boolean isDashboardLoaded() {
-        //WebUI.waitForPageLoaded();
         return WebUI.verifyElementVisible(SECTION_DEFAULT_SHIPPING_ADDRESS);
     }
 

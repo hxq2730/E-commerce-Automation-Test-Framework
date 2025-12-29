@@ -50,7 +50,8 @@ public class CheckoutPage extends CommonPage {
 
     private static final By TAB_UPLOAD_NEW = By.xpath("//a[contains(text(), 'Upload New')]");
 
-    private static final By INPUT_FILE_IN_MODAL = By.xpath("//div[@id='aiz-upload-files']//input[@name='files[]']");
+    private static final By INPUT_FILE_IN_MODAL = By.xpath("//div[@id='aiz-upload-files']//input" +
+            "[@name='files[]']");
 
     private static final By BUTTON_ADD_FILES = By.xpath("//button[contains(text(), 'Add Files')]");
 
@@ -246,8 +247,8 @@ public class CheckoutPage extends CommonPage {
         }
     }
 
-    public String getOrderCode(){
-        try{
+    public String getOrderCode() {
+        try {
             WebUI.waitForElementVisible(TEXT_ORDER_CODE);
             String code = WebUI.getElementText(TEXT_ORDER_CODE);
             LogUtils.info("Captured Order Code: " + code);

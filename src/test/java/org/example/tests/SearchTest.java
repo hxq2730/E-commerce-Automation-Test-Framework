@@ -2,7 +2,6 @@ package org.example.tests;
 
 import org.example.base.BaseTest;
 import org.example.pages.HomePage;
-import org.example.pages.LoginPage;
 import org.example.pages.SearchPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -14,7 +13,7 @@ public class SearchTest extends BaseTest {
     private SearchPage searchPage;
 
     @Test(description = "Verify Search functionality")
-    public void testSearchProduct(){
+    public void testSearchProduct() {
         // 1. Init HomePage
         homePage = new HomePage();
 

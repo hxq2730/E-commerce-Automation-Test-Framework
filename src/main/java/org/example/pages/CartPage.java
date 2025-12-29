@@ -44,7 +44,6 @@ public class CartPage extends CommonPage {
 
     /**
      * Get the name of the first product in the cart.
-     *
      * @return String Product Name
      */
     public String getFirstProductName() {
@@ -56,7 +55,6 @@ public class CartPage extends CommonPage {
 
     /**
      * Get the price of the first product in the cart.
-     *
      * @return String Product Price (e.g., "$100.00")
      */
     public String getFirstProductPrice() {
@@ -67,7 +65,6 @@ public class CartPage extends CommonPage {
 
     /**
      * Get the quantity of the first product in the cart.
-     *
      * @return String Product Quantity (e.g., "1")
      */
     public int getFirstProductQuantity() {
@@ -78,7 +75,6 @@ public class CartPage extends CommonPage {
 
     /**
      * Click 'Continue To Shipping' to navigate to the Shipping page.
-     *
      * @return CheckoutPage
      */
     public void clickContinueToShipping() {

@@ -12,9 +12,11 @@ import java.time.Duration;
 public class ProductDetailsPage extends CommonPage {
 
     // --- LOCATORS ---
-    private static final By BUTTON_ADD_TO_CART = By.xpath("//button[normalize-space()='Add to cart']");
+    private static final By BUTTON_ADD_TO_CART = By.xpath("//button[normalize-space()='Add to " +
+            "cart']");
     private static final By INPUT_QUANTITY = By.xpath("//input[@name='quantity']");
-    private static final By MESSAGE_SUCCESS = By.xpath("//h3[normalize-space()=\"Item added to your cart!\"]");
+    private static final By MESSAGE_SUCCESS = By.xpath("//h3[normalize-space()=\"Item added to " +
+            "your cart!\"]");
     private static final By BUTTON_CLOSE_MODAL = By.xpath("//button[contains(@class, 'close')]");
 
     // --- ACTIONS ---
@@ -22,7 +24,7 @@ public class ProductDetailsPage extends CommonPage {
     /**
      * Click the "Add to Cart" button.
      */
-    public void addToCart(){
+    public void addToCart() {
         WebUI.waitForPageLoaded();
         LogUtils.info("Clicking 'Add to Cart' button.");
 
@@ -41,24 +43,25 @@ public class ProductDetailsPage extends CommonPage {
 
     /**
      * Get the text content of the success message.
+     *
      * @return String - The message text if found, or null if not found/timeout.
      */
-    public String getAddToCartSuccessMessage(){
+    public String getAddToCartSuccessMessage() {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(5));
-        try{
+        try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(MESSAGE_SUCCESS));
 
             String messageText = WebUI.getElementText(MESSAGE_SUCCESS);
             LogUtils.info("✅ Captured Success Message: " + messageText);
 
             return messageText;
-        } catch (Exception e){
+        } catch (Exception e) {
             LogUtils.error("❌ 'Add to Cart' success message NOT found (Timeout).");
             return null;
         }
     }
 
-    public void clickCloseModel(){
+    public void clickCloseModel() {
         WebUI.clickElement(BUTTON_CLOSE_MODAL);
         LogUtils.info("Closed added to cart message");
     }

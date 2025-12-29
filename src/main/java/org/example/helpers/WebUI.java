@@ -211,7 +211,7 @@ public class WebUI {
             // JavascriptExecutor to highlight element
             if (getDriver() instanceof JavascriptExecutor) {
                 ((JavascriptExecutor) getDriver()).executeScript("arguments[0].style.border='3px solid red'", getDriver().findElement(by));
-                sleep(0.5); // Wait a bit to see the highlight
+                sleep(0.5);
             }
         } catch (Exception e) {
             LogUtils.error("Cannot highlight element: " + e.getMessage());

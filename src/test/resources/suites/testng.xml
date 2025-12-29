@@ -1,10 +1,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="High Speed Suite" verbose="1">
+    <listeners>
+        <listener class-name="org.example.listeners.RetryListener"/>
+        <listener class-name="org.example.listeners.TestListener"/>
+    </listeners>
 
     <test name="Run on Chrome High Speed">
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="org.example.tests.CheckoutTest"/>
+            <class name="org.example.tests.SearchTest"/>
         </classes>
     </test>
 

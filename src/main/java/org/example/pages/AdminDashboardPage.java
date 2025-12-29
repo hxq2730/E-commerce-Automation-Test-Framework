@@ -15,7 +15,6 @@ public class AdminDashboardPage {
 
     public void verifyAdminDashboardLoaded() {
         WebUI.waitForPageLoaded();
-        // Verify a unique element like "Total Customer" card
         boolean isLoaded = WebUI.verifyElementVisible(CARD_TOTAL_CUSTOMER);
         if (isLoaded) {
             LogUtils.info("Admin Dashboard loaded successfully.");

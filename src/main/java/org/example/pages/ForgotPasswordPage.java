@@ -15,11 +15,11 @@ public class ForgotPasswordPage {
     public static final By LINK_BACK_TO_LOGIN = By.xpath("a[contains(text(),'Back to Login')]");
 
     //Actions
-    public boolean isForgetPasswordPageLoaded(){
+    public boolean isForgetPasswordPageLoaded() {
         return WebUI.verifyElementVisible(HEADER_FORGOT_PASSWORD);
     }
 
-    public ForgotPasswordPage sendPasswordResetLink(String email){
+    public ForgotPasswordPage sendPasswordResetLink(String email) {
         LogUtils.info("Reset Password for email: " + email);
         WebUI.setText(INPUT_EMAIL, email);
         WebUI.clickElement(BUTTON_SEND_PASSWORD_RESET_LINK);

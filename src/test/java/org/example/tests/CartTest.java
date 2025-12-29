@@ -16,7 +16,7 @@ public class CartTest extends BaseTest {
     private CartPage cartPage;
 
     @Test(description = "Verify Product details in Cart Page")
-    public void testProductAddToCart(){
+    public void testProductAddToCart() {
         // --- PRE-CONDITION: ADD PRODUCT TO CART ---
         homePage = new HomePage();
         homePage.openHomePage();
@@ -47,7 +47,8 @@ public class CartTest extends BaseTest {
 
         // Assert Name
         Assert.assertEquals(actualProductName, expectedProductName,
-                "FAIL: Product Name in Cart does not match. Expected: " + expectedProductName + ", Found: " + actualProductName);
+                "FAIL: Product Name in Cart does not match. Expected: " + expectedProductName +
+                        ", Found: " + actualProductName);
 
         // Assert Price
         String price = cartPage.getFirstProductPrice();

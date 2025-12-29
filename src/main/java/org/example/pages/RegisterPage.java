@@ -11,9 +11,9 @@ public class RegisterPage {
             "account.']");
 
     //Actions
-    public void verifyPageLoaded(){
+    public void verifyPageLoaded() {
         WebUI.waitForPageLoaded();
-        if(WebUI.verifyElementVisible(HEADER_REGISTRATION)){
+        if (WebUI.verifyElementVisible(HEADER_REGISTRATION)) {
             LogUtils.info("Register Page loaded.");
         } else {
             LogUtils.error("Register Page NOT loaded.");

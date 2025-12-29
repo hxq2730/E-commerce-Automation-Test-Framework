@@ -65,6 +65,7 @@ public class BaseTest {
                 // options.addArguments("--headless=new"); // Uncomment for CI/CD
                 //options.addArguments("--window-size=1920,1080");
                 //options.addArguments("--incognito");
+
                 //Turn off "Chrome is being controlled by automated test software"
                 options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
 

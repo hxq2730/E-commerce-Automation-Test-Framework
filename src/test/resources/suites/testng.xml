@@ -1,3 +1,11 @@
-<suites>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="High Speed Suite"  parallel="methods" thread-count="2">
 
-</suites>
+    <test name="Run on Chrome High Speed">
+        <parameter name="browser" value="chrome"/>
+        <classes>
+            <class name="org.example.tests.CheckoutTest"/>
+        </classes>
+    </test>
+
+</suite>

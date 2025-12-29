@@ -15,9 +15,9 @@
 
         <selenium.version>4.38.0</selenium.version>
         <testng.version>7.10.1</testng.version>
-        <poi.version>5.4.0</poi.version>
+        <poi.version>5.5.1</poi.version>
         <allure.version>2.27.0</allure.version>
-        <log4j.version>2.23.1</log4j.version>
+        <log4j.version>2.25.3</log4j.version>
     </properties>
 
     <dependencies>

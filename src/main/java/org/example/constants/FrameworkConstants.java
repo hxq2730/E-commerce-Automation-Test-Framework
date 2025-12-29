@@ -5,6 +5,11 @@ import org.example.helpers.PropertiesHelpers;
 import java.io.File;
 
 public class FrameworkConstants {
+    // Default User for Testing
+    public static final String DEFAULT_EMAIL = "test@gmail.com";
+    public static final String DEFAULT_PASSWORD = "12345678";
+
+    // PATH
     // Project Path
     public static final String PROJECT_PATH = System.getProperty("user.dir");
 
@@ -14,11 +19,12 @@ public class FrameworkConstants {
 
     // Data Files Path
     public static final String EXCEL_DATA_FILE_PATH =
-            RESOURCES_PATH + File.separator + "dataproviders" + File.separator + "LoginData.xlsx";
+            RESOURCES_PATH + File.separator + "testdata" + File.separator + "excel" + File.separator;
     public static final String PROPERTIES_FILE_PATH = RESOURCES_PATH + File.separator + "config" + File.separator +
             "config.properties";
     public static final String TRANSACTION_IMAGE_FILE_PATH =
-            RESOURCES_PATH + File.separator + "testdata" + File.separator + "receipt.jpg";
+            RESOURCES_PATH + File.separator + "testdata" + File.separator + "uploads" + File.separator +
+            "receipt.jpg";
 
     // Browser Info (Read from Config)
     public static final String BROWSER = PropertiesHelpers.getValue("browser");

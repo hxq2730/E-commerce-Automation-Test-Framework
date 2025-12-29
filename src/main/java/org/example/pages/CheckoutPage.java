@@ -211,7 +211,7 @@ public class CheckoutPage extends CommonPage {
         LogUtils.info("Uploading file from path: " + filePath);
 
         WebUI.uploadFile(INPUT_FILE_IN_MODAL, filePath);
-        WebUI.sleep(5);
+        WebUI.sleep(1);
 
         LogUtils.info("Clicking 'Add Files' to confirm.");
         WebUI.clickElement(BUTTON_ADD_FILES);

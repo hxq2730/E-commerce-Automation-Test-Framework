@@ -13,6 +13,7 @@ import org.testng.SkipException;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.util.Hashtable;
 
 public class LoginTest extends BaseTest {
@@ -28,8 +29,8 @@ public class LoginTest extends BaseTest {
     @DataProvider(name = "getDataLoginCustomer")
     public Object[][] getDataLoginCustomer() {
         excelHelpers = new ExcelHelpers();
-        return excelHelpers.getDataHashTable(FrameworkConstants.EXCEL_DATA_FILE_PATH,
-                "Login", 1, 0);
+        String filePath = FrameworkConstants.EXCEL_DATA_FILE_PATH + "LoginData.xlsx";
+        return excelHelpers.getDataHashTable(filePath,"Login", 1, 0);
     }
 
 

@@ -95,7 +95,7 @@ public class BaseTest {
                 options.setExperimentalOption("prefs", prefs);
 
                 driver = new ChromeDriver(options);
-
+                LogUtils.info("Current Window Size: " + DriverManager.getDriver().manage().window().getSize());
                 break;
             case "firefox":
                 driver = new FirefoxDriver();

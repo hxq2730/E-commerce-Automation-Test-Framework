@@ -82,7 +82,7 @@ public class CommonPage {
      * @return SearchPage - Because searching leads to the Search Result Page
      */
     public SearchPage searchForProduct(String productName){
-        LogUtils.info("Search for product" + productName);
+        LogUtils.info("Search for product: " + productName);
 
         // Wait for search input to be interactable
         WebUI.waitForElementVisible(INPUT_SEARCH);

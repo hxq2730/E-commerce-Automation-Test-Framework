@@ -33,6 +33,7 @@ public class CheckoutTest extends BaseTest {
     }
 
     @Test(dataProvider = "getCheckoutData", description = "DDT: Checkout with multiple data sets")
+    @Severity(SeverityLevel.CRITICAL)
     public void testCheckoutDataDriven(Hashtable<String, String> data) {
         // 1. Init Guest User
         homePage = new HomePage();

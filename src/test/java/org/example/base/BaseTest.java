@@ -44,6 +44,7 @@ public class BaseTest {
         DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
         DriverManager.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(FrameworkConstants.WAIT_PAGE_LOADED));
 
+        LogUtils.info("Current Window Size: " + DriverManager.getDriver().manage().window().getSize());
     }
 
 
@@ -95,7 +96,7 @@ public class BaseTest {
                 options.setExperimentalOption("prefs", prefs);
 
                 driver = new ChromeDriver(options);
-                LogUtils.info("Current Window Size: " + DriverManager.getDriver().manage().window().getSize());
+
                 break;
             case "firefox":
                 driver = new FirefoxDriver();

@@ -17,9 +17,12 @@ public class FrameworkConstants {
             RESOURCES_PATH + File.separator + "dataproviders" + File.separator + "LoginData.xlsx";
     public static final String PROPERTIES_FILE_PATH = RESOURCES_PATH + File.separator + "config" + File.separator +
             "config.properties";
+    public static final String TRANSACTION_IMAGE_FILE_PATH =
+            RESOURCES_PATH + File.separator + "testdata" + File.separator + "receipt.jpg";
 
     // Browser Info (Read from Config)
     public static final String BROWSER = PropertiesHelpers.getValue("browser");
+    public static final String URL_DEFAULT = PropertiesHelpers.getValue("url_default");
     public static final String URL_CMS_USER = PropertiesHelpers.getValue("url_user");
     public static final String URL_CMS_ADMIN = PropertiesHelpers.getValue("url_admin");
     // Timeouts

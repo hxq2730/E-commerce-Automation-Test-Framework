@@ -60,6 +60,7 @@ public class BaseTest {
             case "chrome":
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--disable-notifications");
+                options.addArguments("--disable-infobars");
                 options.addArguments("--remote-allow-origins=*");
                 // options.addArguments("--headless=new"); // Uncomment for CI/CD
                 //options.addArguments("--window-size=1920,1080");
@@ -68,12 +69,19 @@ public class BaseTest {
                 options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
 
                 Map<String, Object> prefs = new HashMap<String, Object>();
+
                 //Turn of Save password bundle
                 prefs.put("credentials_enable_service", false);
                 prefs.put("profile.password_manager_enabled", false);
 
                 //Turn off Password Leak Detection
                 prefs.put("profile.password_manager_leak_detection", false);
+
+                // Turn off Autofill Address
+                prefs.put("autofill.profile_enabled", false);
+
+                // Turn of autofill Credit Card)
+                prefs.put("autofill.credit_card_enabled", false);
 
                 options.setExperimentalOption("prefs", prefs);
 

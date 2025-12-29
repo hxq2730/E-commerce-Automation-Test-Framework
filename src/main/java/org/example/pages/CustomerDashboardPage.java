@@ -5,7 +5,7 @@ import org.example.utils.LogUtils;
 import org.openqa.selenium.By;
 
 
-public class CustomerDashboardPage {
+public class CustomerDashboardPage extends CommonPage {
     // Locators specific to Customer Dashboard
     private static final By MENU_PURCHASE_HISTORY = By.xpath("//a[contains(@href," +
             "'purchase_history']");

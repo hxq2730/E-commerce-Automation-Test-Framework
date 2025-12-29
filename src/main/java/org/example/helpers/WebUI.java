@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WebUI {
     private static WebDriver getDriver() {
@@ -44,6 +46,18 @@ public class WebUI {
         }
     }
 
+    /**
+     * Wait for element to be present in DOM (doesn't have to be visible).
+     * Useful for hidden inputs like File Upload.
+     */
+    public static void waitForElementPresent(By by) {
+        try {
+            WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
+            wait.until(ExpectedConditions.presenceOfElementLocated(by));
+        } catch (Exception e) {
+            LogUtils.warn("⚠️ Element not found in DOM: " + by);
+        }
+    }
 
     // --- ACTIONS ---
 
@@ -146,6 +160,17 @@ public class WebUI {
         js.executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'nearest'});", element);
     }
 
+    public static void uploadFile(By by, String filePath){
+        LogUtils.info("📁 Uploading file to hidden element: " + filePath);
+        waitForElementPresent(by);
+        try {
+            getDriver().findElement(by).sendKeys(filePath);
+        } catch (Exception e) {
+            LogUtils.error("❌ Error uploading file: " + e.getMessage());
+            throw e;
+        }
+        LogUtils.info("Set text to hidden element: " + by);
+    }
     public static void openURL(String url) {
         getDriver().get(url);
         LogUtils.info("Open URL: " + url);
@@ -174,6 +199,10 @@ public class WebUI {
         return text;
     }
 
+    public static void pressEnter(By by){
+        DriverManager.getDriver().findElement(by).sendKeys(Keys.ENTER);
+        LogUtils.info("Press Enter on element: " + by);
+    }
 
     // --- UTILITIES ---
 
@@ -231,6 +260,24 @@ public class WebUI {
         }
     }
 
+    /**
+     * Verify if a checkbox or radio button is checked (selected)
+     * @param by The locator of the element
+     * @return true if selected, false otherwise.
+     */
+    public static boolean verifyElementChecked(By by){
+        try{
+            WebDriverWait wait = new WebDriverWait(getDriver(),
+                    Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
+            wait.until(ExpectedConditions.presenceOfElementLocated(by));
+
+            return getDriver().findElement(by).isSelected();
+        } catch (Exception e) {
+            LogUtils.warn("⚠️ Element not found or check failed: " + by);
+            return false;
+        }
+
+    }
     public static boolean verifyPageTitle(String expectedTitle) {
         waitForPageLoaded();
         String actualTitle = getDriver().getTitle();
@@ -256,6 +303,28 @@ public class WebUI {
             LogUtils.info("Page loaded successfully.");
         } catch (Throwable error) {
             LogUtils.error("Timeout waiting for Page Load Request to complete.");
+        }
+    }
+
+    /**
+     * Get a list of WebElements found by the locator.
+     * Use this when you expect multiple elements (e.g., search results, table rows).
+     * @param by The locator of the elements
+     * @return A List of WebElements. Returns an empty list if no elements are found (does not return null).
+     */
+    public static List<WebElement> getWebElements(By by){
+        try{
+            WebDriverWait wait = new WebDriverWait(getDriver(),
+                    Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
+
+            // Wait for at least one element to be present in the DOM
+            wait.until(ExpectedConditions.presenceOfElementLocated(by));
+
+            return getDriver().findElements(by);
+        } catch (Exception e){
+            LogUtils.warn("⚠️ No elements found or timeout waiting for locator: " + by);
+            // Return an empty list to avoid NullPointerException in the test
+            return new ArrayList<>();
         }
     }
 }

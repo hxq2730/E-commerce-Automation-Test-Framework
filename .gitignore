@@ -40,7 +40,15 @@ build/
 
 logs/
 screenshots/
+.allure/
 allure-results/
+allure-report/
+gen/
+out/
+*.class
+*.jar
+*.war
+*.log
 test-output/
 .idea/
 src/test/resources/config/config.properties

@@ -64,7 +64,7 @@ public class CheckoutPage extends CommonPage {
     private static final By MESSAGE_ORDER_CONFIRMED = By.xpath("//h1[contains(text(), 'Thank " +
             "You')]");
 
-    private static final By TEXT_ORDER_CODE = By.xpath("//h2[contains(text(), 'Order Code')]");
+    private static final By TEXT_ORDER_CODE = By.xpath("//h2[contains(text(), 'Order Code')]/span");
 
     // Dynamic Dropdown Locators (Using String format)
     private String STR_BUTTON_DROPDOWN = "//select[@name='%s']/following-sibling::button";
@@ -238,10 +238,22 @@ public class CheckoutPage extends CommonPage {
         try {
             WebUI.waitForElementVisible(MESSAGE_ORDER_CONFIRMED);
             String msg = WebUI.getElementText(MESSAGE_ORDER_CONFIRMED);
-            LogUtils.info("✅ Captured Order Success Message: " + msg);
+            LogUtils.info("Captured Order Success Message: " + msg);
             return msg;
         } catch (Exception e) {
-            LogUtils.error("❌ Order confirmation message not found.");
+            LogUtils.error("Order confirmation message not found.");
+            return null;
+        }
+    }
+
+    public String getOrderCode(){
+        try{
+            WebUI.waitForElementVisible(TEXT_ORDER_CODE);
+            String code = WebUI.getElementText(TEXT_ORDER_CODE);
+            LogUtils.info("Captured Order Code: " + code);
+            return code;
+        } catch (Exception e) {
+            LogUtils.error("Order code not found.");
             return null;
         }
     }

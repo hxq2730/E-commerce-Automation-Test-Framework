@@ -21,6 +21,8 @@ public class CheckoutTest extends BaseTest {
     private CartPage cartPage;
     private LoginPage loginPage;
     private CheckoutPage checkoutPage;
+    private OrderHistoryPage orderHistoryPage;
+
     private ExcelHelpers excelHelpers;
     // --- DATA PROVIDER SETUP ---
     @DataProvider(name = "getCheckoutData")
@@ -74,6 +76,16 @@ public class CheckoutTest extends BaseTest {
 
         Assert.assertTrue(confirmMsg.toLowerCase().contains("thank you"), "FAIL: Success message " +
                 "content is incorrect. Found: " + confirmMsg);
+
+        // 8. Verify order in Order History
+        String orderCode = checkoutPage.getOrderCode();
+        LogUtils.info("Order code: " + orderCode);
+
+        orderHistoryPage = new OrderHistoryPage();
+        String firstOrderCode = orderHistoryPage.getLatestOrderCode();
+
+        Assert.assertEquals(orderCode, firstOrderCode, "❌ Order Code does not match!");
+        LogUtils.info("✅ Order verified successfully in History!");
     }
 
     @Test(description = "E2E: Guest User -> Cart -> Force Login -> Checkout -> Order Success")
@@ -120,5 +132,15 @@ public class CheckoutTest extends BaseTest {
 
         Assert.assertTrue(confirmMsg.toLowerCase().contains("thank you"), "FAIL: Success message " +
                 "content is incorrect. Found: " + confirmMsg);
+
+        // 8. Verify order in Order History
+        String orderCode = checkoutPage.getOrderCode();
+        LogUtils.info("Order code: " + orderCode);
+
+        orderHistoryPage = new OrderHistoryPage();
+        String firstOrderCode = orderHistoryPage.getLatestOrderCode();
+
+        Assert.assertEquals(orderCode, firstOrderCode, "❌ Order Code does not match!");
+        LogUtils.info("✅ Order verified successfully in History!");
     }
 }

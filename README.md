@@ -1,6 +1,6 @@
 # 🚀 Selenium Automation Framework
 
-![Build Status](https://github.com/hxq2730//E-commerce-Automation-Test-Framework/actions/workflows/main.yml/badge.svg) ![Java](https://img.shields.io/badge/Java-22-orange) ![Selenium](https://img.shields.io/badge/Selenium-4.38-green) ![TestNG](https://img.shields.io/badge/TestNG-7.10-blue)
+![Build Status](https://github.com/hxq2730//E-commerce-Automation-Test-Framework/actions/workflows/main.yml/badge.svg) ![Java](https://img.shields.io/badge/Java-17-orange) ![Selenium](https://img.shields.io/badge/Selenium-4.38-green) ![TestNG](https://img.shields.io/badge/TestNG-7.10-blue)
 
 ## 📖 Introduction
 
@@ -10,7 +10,7 @@ It integrates **Data Driven Testing (DDT)** using Excel files and generates deta
 
 ## 🛠 Tech Stack & Tools
 
--   **Language:** Java (JDK 22)
+-   **Language:** Java (JDK 17)
 -   **Core Library:** Selenium WebDriver
 -   **Test Runner:** TestNG
 -   **Build Tool:** Maven
@@ -58,7 +58,7 @@ src
 
 Before running the tests, ensure you have the following installed:
 
--   [Java Development Kit (JDK) 22](https://adoptium.net/)
+-   [Java Development Kit (JDK) 17+](https://adoptium.net/)
 -   [Maven](https://maven.apache.org/)
 -   IntelliJ IDEA or Eclipse
 
@@ -104,7 +104,7 @@ The latest test run report is automatically deployed to GitHub Pages via GitHub 
 This project uses **GitHub Actions** for Continuous Integration:
 
 1.  **Trigger:** Pushes to `main` branch or Scheduled daily at 7:00 AM (GMT+7).
-2.  **Environment:** Ubuntu Latest + Java 22 + Chrome (Headless).
+2.  **Environment:** Ubuntu Latest + Java 17 + Chrome (Headless).
 3.  **Execution:** Runs Maven Test using `testng.xml`.
 4.  **Reporting:** Generates Allure HTML report.
 5.  **Deployment:** Deploys the report to the `gh-pages` branch.

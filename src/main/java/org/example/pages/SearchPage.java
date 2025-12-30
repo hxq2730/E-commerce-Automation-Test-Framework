@@ -27,7 +27,7 @@ public class SearchPage extends CommonPage {
             LogUtils.warn("⚠️ Search result list is empty.");
             return null;
         }
-        String productName = productList.getFirst().getText();
+        String productName = productList.get(0).getText();
         LogUtils.info("Found product: " + productName);
 
         return productName;
@@ -47,7 +47,7 @@ public class SearchPage extends CommonPage {
             return null;
         }
 
-        WebElement firstItem = productList.getFirst();
+        WebElement firstItem = productList.get(0);
         LogUtils.info("Clicking on product: " + firstItem.getText());
         firstItem.click();
 

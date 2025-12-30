@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  automation-test:
+    build: .
+    image: my-selenium-framework
+    container_name: selenium_runner
+
+    volumes:
+      - ./target/allure-results:/app/target/allure-results
+      - ./logs:/app/logs
+
+    environment:
+      - CI=true

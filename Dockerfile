@@ -1,0 +1,15 @@
+FROM maven:3.9.6-eclipse-temurin-17
+
+RUN apt-get update && apt-get install -y wget gnupg \
+    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/googlechrome-linux-keyring.gpg \
+    && sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+    && apt-get update \
+    && apt-get install -y google-chrome-stable
+
+WORKDIR /app
+
+COPY . .
+
+ENV CI=true
+
+CMD ["mvn", "test", "-DsuiteXmlFile=src/test/resources/suites/testng.xml"]

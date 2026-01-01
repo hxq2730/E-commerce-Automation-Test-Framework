@@ -1,0 +1,2 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","7406","Verify Search functionality","High Speed Suite","Thu Jan 01 01:52:04 UTC 2026","passed","Thu Jan 01 01:52:11 UTC 2026","org.example.tests.SearchTest","Run on Chrome High Speed","org.example.tests.SearchTest","testSearchProduct"

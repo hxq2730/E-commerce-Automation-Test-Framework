@@ -102,6 +102,16 @@ public class LoginPage extends CommonPage {
         return new CustomerDashboardPage();
     }
 
+    public AdminDashboardPage loginAdminSuccess(String email, String password) {
+        LogUtils.info("Performing admin login with Email: " + email + " | Password: " + password);
+        WebUI.setText(INPUT_EMAIL, email);
+        WebUI.setText(INPUT_PASSWORD, password);
+        WebUI.clickElement(BUTTON_LOGIN);
+        WebUI.waitForPageLoaded();
+
+        return new AdminDashboardPage();
+    }
+
     public void loginFail(String email, String password) {
         LogUtils.info("Performing customer login (expecting failure) with Email: " + email + " | "
                 + "Password: " + password);

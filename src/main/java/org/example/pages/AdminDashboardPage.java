@@ -6,25 +6,30 @@ import org.openqa.selenium.By;
 
 public class AdminDashboardPage {
     private static final By MENU_PRODUCTS = By.xpath("//span[normalize-space()='Products']");
-    private static final By CARD_TOTAL_CUSTOMER = By.xpath("//span[normalize-space()='Total " +
-            "Customer']");
+    private static final By BUTTON_ADD_NEW_PRODUCT = By.xpath("//span[normalize-space()=\"Add New" +
+            " Product\"]");
+
 
     public AdminDashboardPage() {
         // Empty constructor
     }
 
-    public void verifyAdminDashboardLoaded() {
+    public boolean verifyAdminDashboardLoaded() {
         WebUI.waitForPageLoaded();
-        boolean isLoaded = WebUI.verifyElementVisible(CARD_TOTAL_CUSTOMER);
+        boolean isLoaded = WebUI.verifyElementVisible(MENU_PRODUCTS);
         if (isLoaded) {
             LogUtils.info("Admin Dashboard loaded successfully.");
+            return true;
         } else {
             LogUtils.error("Admin Dashboard NOT loaded.");
+            return false;
         }
     }
 
-    public void openProductPage() {
+    public void openAddNewProductPage() {
         WebUI.clickElement(MENU_PRODUCTS);
-        LogUtils.info("Navigated to Products Management page.");
+        WebUI.clickElement(BUTTON_ADD_NEW_PRODUCT);
+        WebUI.waitForPageLoaded();
+        LogUtils.info("Navigated to Add New Products Page.");
     }
 }

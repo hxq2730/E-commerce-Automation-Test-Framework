@@ -10,6 +10,12 @@ public class HomePage extends CommonPage {
     private static final By LOGO_IMG = By.xpath("//a[contains(@class,'d-block')]//img");
     // --- ACTIONS ---
 
+    public HomePage(){}
+
+    public boolean isHomePageLoaded() {
+        return WebUI.verifyElementVisible(LOGO_IMG);
+    }
+
     /**
      * Open the Home Page, handle popups, and verify the page is ready.
      * @return HomePage instance for method chaining

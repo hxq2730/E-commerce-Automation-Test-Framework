@@ -33,26 +33,6 @@ public class LoginTest extends BaseTest {
     }
 
 
-    @Test(priority = 1, description = "Verify login success with valid credentials",
-            dataProvider = "getDataLoginCustomer")
-    public void testLoginSuccess(Hashtable<String, String> data) {
-        //1. Initialize Page Object
-        loginPage = new LoginPage();
-
-        //2. Navigate to Login Page
-        loginPage.openLoginPage();
-
-        //3. Perform Login using data from Excel
-        customerDashboardPage = loginPage.loginSuccess(data.get("EMAIL"), data.get("PASSWORD"));
-
-        // 4. Verify Customer Dashboard is loaded
-        boolean isLoaded = customerDashboardPage.isDashboardLoaded();
-        Assert.assertTrue(isLoaded, "FAIL: Dashboard page is not visible. Login might have failed" +
-                ".");
-
-        LogUtils.info("✅ Login Test Passed for user: " + data.get("email"));
-    }
-
     @Test(priority = 1, dataProvider = "getDataLoginCustomer")
     public void testLoginFlows(Hashtable<String, String> data) {
         loginPage = new LoginPage();
@@ -165,4 +145,24 @@ public class LoginTest extends BaseTest {
                 "FAIL: Login with ENTER key failed. Dashboard not loaded.");
     }
 
+
+//    @Test(priority = 1, description = "Verify login success with valid credentials",
+//            dataProvider = "getDataLoginCustomer")
+//    public void testLoginSuccess(Hashtable<String, String> data) {
+//        //1. Initialize Page Object
+//        loginPage = new LoginPage();
+//
+//        //2. Navigate to Login Page
+//        loginPage.openLoginPage();
+//
+//        //3. Perform Login using data from Excel
+//        customerDashboardPage = loginPage.loginSuccess(data.get("EMAIL"), data.get("PASSWORD"));
+//
+//        // 4. Verify Customer Dashboard is loaded
+//        boolean isLoaded = customerDashboardPage.isDashboardLoaded();
+//        Assert.assertTrue(isLoaded, "FAIL: Dashboard page is not visible. Login might have failed" +
+//                ".");
+//
+//        LogUtils.info("✅ Login Test Passed for user: " + data.get("email"));
+//    }
 }

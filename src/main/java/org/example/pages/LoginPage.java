@@ -43,13 +43,12 @@ public class LoginPage extends CommonPage {
         WebUI.setText(INPUT_EMAIL, email);
         WebUI.setText(INPUT_PASSWORD, password);
         WebUI.clickElement(BUTTON_LOGIN);
+        WebUI.waitForPageLoaded();
     }
 
     public boolean isErrorAlertDisplayed(String expectedMessage) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(5));
         try {
-            // Wait until the specific text exists in the element, This condition checks both
-            // presence and text content
             wait.until(ExpectedConditions.textToBePresentInElementLocated(ALERT_MESSAGE,
                     expectedMessage));
 

@@ -8,6 +8,8 @@ import org.openqa.selenium.By;
 public class HomePage extends CommonPage {
 
     private static final By LOGO_IMG = By.xpath("//a[contains(@class,'d-block')]//img");
+    private static final By LINK_REGISTER = By.xpath("//a[normalize-space()='Registration']");
+
     // --- ACTIONS ---
 
     public HomePage(){}
@@ -20,7 +22,7 @@ public class HomePage extends CommonPage {
      * Open the Home Page, handle popups, and verify the page is ready.
      * @return HomePage instance for method chaining
      */
-    public HomePage openHomePage() {
+    public void openHomePage() {
         LogUtils.info("Opening Home Page...");
         WebUI.openURL(FrameworkConstants.URL_DEFAULT);
         WebUI.waitForPageLoaded();
@@ -33,8 +35,11 @@ public class HomePage extends CommonPage {
             LogUtils.error("❌ Home Page did not load correctly (Slider not visible).");
         }
         LogUtils.info("✅ Home Page loaded and ready.");
-
-        return this;
     }
 
+    public RegisterPage openRegisterPage(){
+        WebUI.clickElement(LINK_REGISTER);
+        WebUI.waitForPageLoaded();
+        return new RegisterPage();
+    }
 }

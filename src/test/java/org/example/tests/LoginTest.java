@@ -28,7 +28,7 @@ public class LoginTest extends BaseTest {
     @DataProvider(name = "getDataLoginCustomer")
     public Object[][] getDataLoginCustomer() {
         excelHelpers = new ExcelHelpers();
-        String filePath = FrameworkConstants.EXCEL_DATA_FILE_PATH + "LoginData.xlsx";
+        String filePath = FrameworkConstants.EXCEL_DATA_FILE_PATH + "UserManagementData.xlsx";
         return excelHelpers.getDataHashTable(filePath, "Login", 1, 0);
     }
 
@@ -53,6 +53,63 @@ public class LoginTest extends BaseTest {
         LogUtils.info("✅ Login Test Passed for user: " + data.get("email"));
     }
 
+    @Test(priority = 1, dataProvider = "getDataLoginCustomer")
+    public void testLoginFlows(Hashtable<String, String> data) {
+        loginPage = new LoginPage();
+        customerDashboardPage = new CustomerDashboardPage();
+
+        String testCaseName = data.get("TEST_CASE_NAME");
+        String email = data.get("EMAIL");
+        String password = data.get("PASSWORD");
+        String expectedType = data.get("EXPECTED_TYPE");
+        String expectedMessage = data.get("EXPECTED_MESSAGE");
+        String runMode = data.get("RUN_MODE");
+
+        if (testCaseName == null || testCaseName.trim().isEmpty() || expectedType == null || expectedType.trim().isEmpty()) {
+            LogUtils.warn("Detected an empty or invalid row in Excel data. Skipping this test " +
+                    "iteration.");
+            return;
+        }
+
+        if (runMode.equals("N")) throw new SkipException("Skipping test: " + testCaseName);
+
+        LogUtils.info("Running Test Case: " + testCaseName);
+
+        loginPage.openLoginPage();
+        loginPage.performLogin(email, password);
+
+        switch (expectedType) {
+            case "pass":
+                LogUtils.info("Verify Step: Expecting Login Success");
+                boolean isDashboardLoaded = customerDashboardPage.isDashboardLoaded();
+                Assert.assertTrue(isDashboardLoaded, "FAIL: Login success but Dashboard is NOT " +
+                        "visible.");
+                break;
+            case "fail_alert":
+                LogUtils.info("Verify Step: Expecting Error Alert (Toast)");
+                boolean isAlertDisplayed = loginPage.isErrorAlertDisplayed(expectedMessage);
+                Assert.assertTrue(isAlertDisplayed, "FAIL: Error Alert not displayed or content " +
+                        "mismatch. Expected: " + expectedMessage);
+                break;
+            case "fail_html5":
+                LogUtils.info("Verify Step: Expecting HTML5 Validation Message");
+                boolean isHtml5Displayed =
+                        loginPage.isHTML5ValidationMessageDisplayed(expectedMessage);
+                Assert.assertTrue(isHtml5Displayed,
+                        "FAIL: HTML5 validation message does not contain expected keyword. " +
+                                "Expected contains: " + expectedMessage);
+                break;
+            case "fail_text":
+                LogUtils.info("Verify Step: Expecting Text Error under Input");
+                boolean isTextDisplayed = loginPage.isInputErrorTextDisplayed(expectedMessage);
+                Assert.assertTrue(isTextDisplayed,
+                        "FAIL: Error text under input is NOT displayed. Expected: " + expectedMessage);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid EXPECTED_TYPE in Excel: " + expectedType);
+        }
+    }
+
     @Test(priority = 2, description = "Verify login fail with invalid credentials")
     public void testLoginFail() {
         loginPage = new LoginPage();
@@ -70,65 +127,7 @@ public class LoginTest extends BaseTest {
                 "appear!");
     }
 
-    @Test(dataProvider = "getDataLoginCustomer")
-    public void testLoginFlows(Hashtable<String, String> data) {
-        loginPage = new LoginPage();
-        customerDashboardPage = new CustomerDashboardPage();
-
-        String testCaseName = data.get("TEST_CASE_NAME");
-        String email = data.get("EMAIL");
-        String password = data.get("PASSWORD");
-        String expectedType = data.get("EXPECTED_TYPE");
-        String expectedMessage = data.get("EXPECTED_MESSAGE");
-        String runMode = data.get("RUN_MODE");
-
-        // If the row in Excel is empty or contains null values, skip this iteration immediately.
-        if (testCaseName == null || testCaseName.trim().isEmpty() || expectedType == null || expectedType.trim().isEmpty()) {
-            LogUtils.warn("⚠️ Detected an empty or invalid row in Excel data. Skipping this test " +
-                    "iteration.");
-            return; // Exit this method, effectively skipping this "ghost" test case
-        }
-
-        if (runMode.equals("N")) throw new SkipException("Skipping test: " + testCaseName);
-
-        LogUtils.info("➡️ Running Test Case: " + testCaseName);
-
-        loginPage.openLoginPage();
-        loginPage.performLogin(email, password);
-
-        switch (expectedType) {
-            case "pass":
-                LogUtils.info("👉 Verify Step: Expecting Login Success");
-                boolean isDashboardLoaded = customerDashboardPage.isDashboardLoaded();
-                Assert.assertTrue(isDashboardLoaded, "FAIL: Login success but Dashboard is NOT " +
-                        "visible.");
-                break;
-            case "fail_alert":
-                LogUtils.info("👉 Verify Step: Expecting Error Alert (Toast)");
-                boolean isAlertDisplayed = loginPage.isErrorAlertDisplayed(expectedMessage);
-                Assert.assertTrue(isAlertDisplayed, "FAIL: Error Alert not displayed or content " +
-                        "mismatch. Expected: " + expectedMessage);
-                break;
-            case "fail_html5":
-                LogUtils.info("👉 Verify Step: Expecting HTML5 Validation Message");
-                boolean isHtml5Displayed =
-                        loginPage.isHTML5ValidationMessageDisplayed(expectedMessage);
-                Assert.assertTrue(isHtml5Displayed,
-                        "FAIL: HTML5 validation message does not contain expected keyword. " +
-                                "Expected contains: " + expectedMessage);
-                break;
-            case "fail_text":
-                LogUtils.info("👉 Verify Step: Expecting Text Error under Input");
-                boolean isTextDisplayed = loginPage.isInputErrorTextDisplayed(expectedMessage);
-                Assert.assertTrue(isTextDisplayed,
-                        "FAIL: Error text under input is NOT displayed. Expected: " + expectedMessage);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid EXPECTED_TYPE in Excel: " + expectedType);
-        }
-    }
-
-    @Test(priority = 2, description = "TC_20: Verify Forgot Password Link")
+    @Test(priority = 2, description = "Verify Forgot Password Link")
     public void testForgotPasswordLink() {
         loginPage = new LoginPage();
         forgotPasswordPage = new ForgotPasswordPage();

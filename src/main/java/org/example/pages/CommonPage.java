@@ -67,7 +67,7 @@ public class CommonPage {
             LogUtils.info("ℹ️ Website Popup did not appear.");
         }
 
-        // 2. Handle Cookie Banner (Optional)
+        // 2. Handle Cookie Banner
         try {
             if (WebUI.verifyElementVisible(BUTTON_ACCEPT_COOKIE)) {
                 WebUI.clickElement(BUTTON_ACCEPT_COOKIE);

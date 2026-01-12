@@ -29,7 +29,7 @@ public class AddProductTest extends BaseTest {
     }
 
     @Test(dataProvider = "getCreateProductData", priority = 1, description = "Test add new product")
-    @Severity(SeverityLevel.CRITICAL)
+    @Severity(SeverityLevel.NORMAL)
     public void testCreateProduct(Hashtable<String, String> data) {
 
         loginPage = new LoginPage();

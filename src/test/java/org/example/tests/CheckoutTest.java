@@ -33,7 +33,7 @@ public class CheckoutTest extends BaseTest {
     }
 
     @Test(dataProvider = "getCheckoutData", description = "DDT: Checkout with multiple data sets")
-    @Severity(SeverityLevel.CRITICAL)
+    @Severity(SeverityLevel.NORMAL)
     public void testCheckoutDataDriven(Hashtable<String, String> data) {
         // 1. Init Guest User
         homePage = new HomePage();
@@ -90,7 +90,7 @@ public class CheckoutTest extends BaseTest {
     }
 
     @Test(description = "E2E: Guest User -> Cart -> Force Login -> Checkout -> Order Success")
-    @Severity(SeverityLevel.CRITICAL)
+    @Severity(SeverityLevel.NORMAL)
     public void testGuestCheckoutWithLoginRedirect() {
         // 1. Init Guest User
         homePage = new HomePage();

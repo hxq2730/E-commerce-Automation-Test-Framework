@@ -40,7 +40,7 @@ public class BaseTest {
         // 2. Set driver to ThreadLocal
         DriverManager.setDriver(driver);
 
-        // 3. Maximize and Setup Timeouts via DriverManager
+        // 3. Setup Timeouts via DriverManager
         DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
         DriverManager.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(FrameworkConstants.WAIT_PAGE_LOADED));
 

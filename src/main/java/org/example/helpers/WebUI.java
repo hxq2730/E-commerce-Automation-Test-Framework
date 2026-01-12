@@ -178,7 +178,7 @@ public class WebUI {
 
     public static void clickElement(By by) {
         waitForElementClickable(by);
-        highLightElement(by); // Optional: Highlight before click
+        highLightElement(by);
         getDriver().findElement(by).click();
         LogUtils.info("Clicked on element: " + by);
     }

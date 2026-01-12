@@ -33,6 +33,16 @@ public class RegisterPage {
 
     // ACTIONS
     public void createAnAccount(String fullName, String email, String password,
+                                String confirmPassword) {
+        WebUI.setText(INPUT_FULL_NAME, fullName);
+        WebUI.setText(INPUT_EMAIL, email);
+        WebUI.setText(INPUT_PASSWORD, password);
+        WebUI.setText(INPUT_CONFIRM_PASSWORD, confirmPassword);
+        WebUI.clickElement(CHECKBOX_AGREE);
+        WebUI.clickElement(BUTTON_CREATE_ACCOUNT);
+        WebUI.waitForPageLoaded();
+    }
+    public void createAnAccount(String fullName, String email, String password,
                                 String confirmPassword, boolean agreeTerms) {
         WebUI.setText(INPUT_FULL_NAME, fullName);
         WebUI.setText(INPUT_EMAIL, email);

@@ -1,8 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="High Speed Suite" verbose="1" parallel="classes" thread-count="2">
-    <listeners>
-        <listener class-name="org.example.listeners.TestListener"/>
-    </listeners>
     <test name="Run on Chrome">
         <parameter name="browser" value="chrome"/>
         <classes>

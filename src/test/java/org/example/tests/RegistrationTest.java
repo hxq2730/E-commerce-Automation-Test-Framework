@@ -25,7 +25,7 @@ public class RegistrationTest extends BaseTest {
         return excelHelpers.getDataHashTable(filePath, "Register", 1, 0);
     }
 
-    @Test(dataProvider = "getRegisterData", description = "Positive test case")
+    @Test(dataProvider = "getRegisterData", description = "Test Login Flow")
     public void testRegisterFlow(Hashtable<String, String> data) {
         homePage = new HomePage();
         registerPage = new RegisterPage();

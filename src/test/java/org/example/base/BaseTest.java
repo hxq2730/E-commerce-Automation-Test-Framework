@@ -10,7 +10,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
@@ -50,7 +52,7 @@ public class BaseTest {
 
 
     @AfterMethod
-    public void closeDriver(){
+    public void closeDriver() {
         LogUtils.info("Closing browser...");
         DriverManager.quit();
     }
@@ -59,7 +61,7 @@ public class BaseTest {
     private WebDriver setupBrowser(String browserName) {
         WebDriver driver;
         switch (browserName.toLowerCase()) {
-            case "chrome":
+            case "chrome": {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--disable-notifications");
                 options.addArguments("--disable-infobars");
@@ -95,21 +97,66 @@ public class BaseTest {
                 options.setExperimentalOption("prefs", prefs);
 
                 driver = new ChromeDriver(options);
+
+                break;
+            }
+            case "firefox": {
+                FirefoxOptions options = new FirefoxOptions();
+
+                options.addPreference("dom.webnotifications.enabled", false);
+                options.addPreference("geo.enabled", false);
+                options.addPreference("browser.download.manager.showWhenStarting", false);
+                options.addPreference("devtools.console.stdout.content", true);
+
+                options.addPreference("signon.rememberSignons", false);
+                options.addPreference("extensions.formautofill.addresses.enabled", false);
+                options.addPreference("extensions.formautofill.creditCards.enabled", false);
+
                 if (System.getenv("CI") != null) {
-                    driver.manage().window().setSize(new Dimension(1920, 1080));
-                } else {
-                    driver.manage().window().maximize();
+                    options.addArguments("-headless");
+                    options.addArguments("--width=1920");
+                    options.addArguments("--height=1080");
                 }
+
+                driver = new FirefoxDriver(options);
                 break;
-            case "firefox":
-                driver = new FirefoxDriver();
+            }
+            case "edge": {
+                EdgeOptions options = new EdgeOptions();
+                options.addArguments("--disable-notifications");
+                options.addArguments("--disable-infobars");
+                options.addArguments("--remote-allow-origins=*");
+                options.addArguments("--guest");
+
+                if (System.getenv("CI") != null) {
+                    options.addArguments("--headless=new");
+                    options.addArguments("--window-size=1920,1080");
+                    options.addArguments("--no-sandbox");
+                    options.addArguments("--disable-dev-shm-usage");
+                }
+                options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+
+                Map<String, Object> prefs = new HashMap<>();
+                prefs.put("credentials_enable_service", false);
+                prefs.put("profile.password_manager_enabled", false);
+                prefs.put("autofill.profile_enabled", false);
+                prefs.put("autofill.credit_card_enabled", false);
+
+                options.setExperimentalOption("prefs", prefs);
+
+                driver = new EdgeDriver(options);
                 break;
-            case "edge":
-                driver = new EdgeDriver();
-                break;
+            }
             default:
                 throw new IllegalArgumentException("Browser not supported: " + browserName);
         }
+
+        if (System.getenv("CI") != null) {
+            driver.manage().window().setSize(new Dimension(1920, 1080));
+        } else {
+            driver.manage().window().maximize();
+        }
+
         return driver;
     }
 }

@@ -24,14 +24,15 @@ public class BaseTest {
 
     @BeforeMethod
     @Parameters({"browser"})
-    public void createDriver(@Optional("chrome") String browserName) {
+    public void createDriver(@Optional String browserName) {
 
         // 1. If XML parameter is missing, read from Config file
-        if (browserName == null || browserName.equalsIgnoreCase("chrome")) {
-            String configBrowser = FrameworkConstants.BROWSER;
-            if (configBrowser != null && !configBrowser.isEmpty()) {
-                browserName = configBrowser;
-            }
+        if (browserName == null) {
+            browserName = FrameworkConstants.BROWSER;
+        }
+        if (browserName == null || browserName.isEmpty()) { //<parameter name="browser"
+            // value=""/> or BROWSER=
+            browserName = "chrome";
         }
 
         LogUtils.info("Initializing browser: " + browserName);

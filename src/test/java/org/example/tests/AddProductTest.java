@@ -28,7 +28,8 @@ public class AddProductTest extends BaseTest {
         return excelHelpers.getDataHashTable(filePath, "AddProduct", 1, 0);
     }
 
-    @Test(dataProvider = "getCreateProductData", priority = 1, description = "Test add new product")
+    @Test(dataProvider = "getCreateProductData", priority = 1, groups = "smoke", description =
+            "Test add new product")
     @Severity(SeverityLevel.NORMAL)
     public void testCreateProduct(Hashtable<String, String> data) {
 

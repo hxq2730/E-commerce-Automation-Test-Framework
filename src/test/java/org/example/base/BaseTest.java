@@ -24,7 +24,7 @@ import java.util.Map;
 public class BaseTest {
     protected WebDriverWait wait;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     @Parameters({"browser"})
     public void createDriver(@Optional String browserName) {
 
@@ -44,14 +44,14 @@ public class BaseTest {
         DriverManager.setDriver(driver);
 
         // 3. Setup Timeouts via DriverManager
-        DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(FrameworkConstants.WAIT_EXPLICIT));
+        DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(FrameworkConstants.WAIT_IMPLICIT));
         DriverManager.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(FrameworkConstants.WAIT_PAGE_LOADED));
 
         LogUtils.info("Current Window Size: " + DriverManager.getDriver().manage().window().getSize());
     }
 
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void closeDriver() {
         LogUtils.info("Closing browser...");
         DriverManager.quit();

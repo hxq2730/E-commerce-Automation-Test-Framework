@@ -2,28 +2,16 @@
 <suite name="High Speed Suite" verbose="1" parallel="tests" thread-count="3">
     <test name="Run on Chrome">
         <parameter name="browser" value="chrome"/>
-        <classes>
-            <class name="org.example.tests.RegistrationTest"/>
-            <class name="org.example.tests.LoginTest"/>
-            <class name="org.example.tests.SearchTest"/>
-            <class name="org.example.tests.AddToCartTest"/>
-            <class name="org.example.tests.CartTest"/>
-            <class name="org.example.tests.CheckoutTest"/>
-            <class name="org.example.tests.AddProductTest"/>
-        </classes>
+        <packages>
+            <package name="org.example.tests.*"/>
+        </packages>
     </test>
 
     <test name="Run on firefox">
         <parameter name="browser" value="firefox"/>
-        <classes>
-            <class name="org.example.tests.RegistrationTest"/>
-            <class name="org.example.tests.LoginTest"/>
-            <class name="org.example.tests.SearchTest"/>
-            <class name="org.example.tests.AddToCartTest"/>
-            <class name="org.example.tests.CartTest"/>
-            <class name="org.example.tests.CheckoutTest"/>
-            <class name="org.example.tests.AddProductTest"/>
-        </classes>
+        <packages>
+            <package name="org.example.tests.*"/>
+        </packages>
     </test>
 
     <test name="Run on Edge">

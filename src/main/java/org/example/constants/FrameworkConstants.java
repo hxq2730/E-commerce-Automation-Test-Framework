@@ -40,6 +40,7 @@ public class FrameworkConstants {
 
     // Timeouts
     public static final int WAIT_EXPLICIT = 10;
+    public static final int WAIT_IMPLICIT = 10;
     public static final int WAIT_PAGE_LOADED = 30;
     public static final int WAIT_SLEEP_STEP = 3;
 }

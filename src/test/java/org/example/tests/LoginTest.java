@@ -33,7 +33,7 @@ public class LoginTest extends BaseTest {
     }
 
 
-    @Test(priority = 1, dataProvider = "getDataLoginCustomer")
+    @Test(priority = 1, dataProvider = "getDataLoginCustomer", groups = "smoke")
     public void testLoginFlows(Hashtable<String, String> data) {
         loginPage = new LoginPage();
         customerDashboardPage = new CustomerDashboardPage();

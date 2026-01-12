@@ -74,18 +74,23 @@ public class ExcelHelpers {
 
         int rowCount = getRows();
         int colCount = getColumns();
+        int actualRows = rowCount - startRow + 1;
 
-        Object[][] data = new Object[rowCount][1];
+        if (actualRows <= 0) {
+            return new Object[0][0];
+        }
+
+        Object[][] data = new Object[actualRows][1];
         Hashtable<String, String> table = null;
 
-        for (int i = 1; i <= rowCount; i++) { // Start from row 1 (Row 0 is header)
+        for (int i = startRow; i <= rowCount; i++) {
             table = new Hashtable<>();
-            for (int j = 0; j < colCount; j++) {
-                String header = getCellData(0, j); // Row 0 is key
-                String value = getCellData(i, j);  // Row i is value
+            for (int j = startCol; j < colCount; j++) {
+                String header = getCellData(0, j);
+                String value = getCellData(i, j);
                 table.put(header, value);
             }
-            data[i - 1][0] = table;
+            data[i - startRow][0] = table;
         }
         return data;
     }

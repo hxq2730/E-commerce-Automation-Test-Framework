@@ -5,6 +5,7 @@ import org.example.constants.FrameworkConstants;
 import org.example.helpers.ExcelHelpers;
 import org.example.pages.HomePage;
 import org.example.pages.RegisterPage;
+import org.example.utils.DataUtils;
 import org.example.utils.LogUtils;
 import org.testng.Assert;
 import org.testng.SkipException;
@@ -32,12 +33,18 @@ public class RegistrationTest extends BaseTest {
 
         String testCaseName = data.get("TestCaseName");
         String fullName = data.get("FullName");
-        String email = data.get("Email");
+        String originalEmail = data.get("Email");
         String password = data.get("Password");
         String confirmPassword = data.get("ConfirmPassword");
         String expectedType = data.get("ExpectedType");
         String expectedMessage = data.get("ExpectedMessage");
         String runMode = data.get("RunMode");
+
+        String emailToUse = originalEmail;
+        if (expectedType.equalsIgnoreCase("pass")) {
+            emailToUse = DataUtils.getEmailWithTimestamp(originalEmail);
+            LogUtils.info("Generated Unique Email: " + emailToUse);
+        }
 
         boolean isAgree = true;
         if (data.containsKey("AgreeTerms")) {
@@ -58,7 +65,7 @@ public class RegistrationTest extends BaseTest {
 
         homePage.openHomePage();
         registerPage = homePage.openRegisterPage();
-        registerPage.createAnAccount(fullName, email, password, confirmPassword, isAgree);
+        registerPage.createAnAccount(fullName, emailToUse, password, confirmPassword, isAgree);
 
         switch (expectedType) {
             case "pass": {

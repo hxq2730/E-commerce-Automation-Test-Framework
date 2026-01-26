@@ -61,7 +61,7 @@ public class CheckoutTest extends BaseTest {
             LogUtils.info("Performing 2nd Click on Checkout button after Login...");
             cartPage.clickContinueToShipping();
         } else {
-            LogUtils.info("Login Modal did not appear (User might be already logged in).");
+            LogUtils.info("Login Modal did not appear (User might be already logged in)");
         }
 
         // 6. Init Checkout Page

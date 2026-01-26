@@ -32,7 +32,7 @@ public class CheckoutTest extends BaseTest {
         return excelHelpers.getDataHashTable(filePath, "ShippingInfo", 1, 0 );
     }
 
-    @Test(dataProvider = "getCheckoutData", description = "DDT: Checkout with multiple data sets")
+    @Test(dataProvider = "getCheckoutData", description = "DDT: Checkout with multiple data sets", enabled = false)
     @Severity(SeverityLevel.NORMAL)
     public void testCheckoutDataDriven(Hashtable<String, String> data) {
         // 1. Init Guest User

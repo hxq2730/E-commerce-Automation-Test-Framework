@@ -79,11 +79,6 @@ You can run the tests using the configured TestNG XML suite:
 mvn clean test -DsuiteXmlFile=src/test/resources/suites/testng.xml
 ```
 
-### 3. Run with specific browser (Optional)
-
-```bash
-mvn clean test -Dbrowser=edge
-```
 
 ## 📊 Test Reports
 

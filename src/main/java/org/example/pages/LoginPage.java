@@ -1,5 +1,6 @@
 package org.example.pages;
 
+import io.qameta.allure.Step;
 import org.example.constants.FrameworkConstants;
 import org.example.driver.DriverManager;
 import org.example.helpers.WebUI;
@@ -39,6 +40,7 @@ public class LoginPage extends CommonPage {
         }
     }
 
+    @Step("UI: Login with email {0} and password {1}")
     public void performLogin(String email, String password) {
         WebUI.setText(INPUT_EMAIL, email);
         WebUI.setText(INPUT_PASSWORD, password);

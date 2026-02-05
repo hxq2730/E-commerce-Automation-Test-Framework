@@ -1,11 +1,10 @@
-package org.example.tests;
+package org.example.tests.ui;
 
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import org.example.base.BaseTest;
 import org.example.constants.FrameworkConstants;
 import org.example.helpers.ExcelHelpers;
-import org.example.helpers.WebUI;
 import org.example.pages.*;
 import org.example.utils.LogUtils;
 import org.testng.Assert;
@@ -32,7 +31,7 @@ public class CheckoutTest extends BaseTest {
         return excelHelpers.getDataHashTable(filePath, "ShippingInfo", 1, 0 );
     }
 
-    @Test(dataProvider = "getCheckoutData", description = "DDT: Checkout with multiple data sets", enabled = false)
+    @Test(dataProvider = "getCheckoutData", description = "DDT: Checkout with multiple data sets")
     @Severity(SeverityLevel.NORMAL)
     public void testCheckoutDataDriven(Hashtable<String, String> data) {
         // 1. Init Guest User

@@ -55,8 +55,7 @@ public class CheckoutPage extends CommonPage {
 
     private static final By BUTTON_ADD_FILES = By.xpath("//button[contains(text(), 'Add Files')]");
 
-    private static final By CHECKBOX_AGREE_TERMS = By.xpath("//input[@id='agree_checkbox']/parent" +
-            "::label");
+    private static final By CHECKBOX_AGREE_TERMS = By.id("agree_checkbox");
 
     private static final By BUTTON_COMPLETE_ORDER = By.xpath("//button[normalize-space()" +
             "=\"Complete Order\"]");
@@ -221,12 +220,13 @@ public class CheckoutPage extends CommonPage {
     }
 
     public void clickAgreePolicies() {
-        if (!WebUI.verifyElementChecked(CHECKBOX_AGREE_TERMS)) {
-            WebUI.clickElement(CHECKBOX_AGREE_TERMS);
-            LogUtils.info("Checked agree to the policies");
-        } else {
-            LogUtils.info("ℹ️ Checkbox was already auto-selected.");
-        }
+        WebUI.jsClick(CHECKBOX_AGREE_TERMS);
+//        if (!WebUI.verifyElementChecked(CHECKBOX_AGREE_TERMS)) {
+//            WebUI.clickElement(CHECKBOX_AGREE_TERMS);
+//            LogUtils.info("Checked agree to the policies");
+//        } else {
+//            LogUtils.info("ℹ️ Checkbox was already auto-selected.");
+//        }
     }
 
     public void clickCompleteOrder() {

@@ -1,4 +1,4 @@
-package org.example.tests;
+package org.example.tests.ui;
 
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;

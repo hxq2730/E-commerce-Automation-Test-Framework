@@ -8,8 +8,8 @@
         </groups>
 
         <classes>
-            <class name="org.example.tests.LoginTest"/>
-            <class name="org.example.tests.AddProductTest"/>
+            <class name="org.example.tests.ui.LoginTest"/>
+            <class name="org.example.tests.ui.AddProductTest"/>
         </classes>
     </test>
 </suite>

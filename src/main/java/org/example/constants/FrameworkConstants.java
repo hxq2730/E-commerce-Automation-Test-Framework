@@ -37,6 +37,7 @@ public class FrameworkConstants {
     public static final String URL_DEFAULT = PropertiesHelpers.getValue("url_default");
     public static final String URL_CMS_USER = PropertiesHelpers.getValue("url_user");
     public static final String URL_CMS_ADMIN = PropertiesHelpers.getValue("url_admin");
+    public static final String URL_API = PropertiesHelpers.getValue("url_api");
 
     // Timeouts
     public static final int WAIT_EXPLICIT = 10;

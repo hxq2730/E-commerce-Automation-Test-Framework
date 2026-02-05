@@ -5,15 +5,15 @@ import lombok.Getter;
 
 public class UserAccount {
     @Getter
-    private String name;
+    private final String name;
     @Getter
-    private String email;
+    private final String email;
     @Getter
-    private String password;
+    private final String password;
     @Getter
-    private String password_confirmation;
+    private final String password_confirmation;
     @Getter
-    private String phone;
+    private final String phone;
 
     public UserAccount(){
         Faker faker = new Faker();
@@ -22,6 +22,14 @@ public class UserAccount {
         this.password = "123456";
         this.password_confirmation = "123456";
         this.phone = "09" + faker.number().digits(8);
+    }
+
+    public UserAccount(String name, String email, String password, String password_confirmation, String phone){
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.password_confirmation = password_confirmation;
+        this.phone = phone;
     }
 
 }

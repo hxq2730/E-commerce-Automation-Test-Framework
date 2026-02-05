@@ -4,13 +4,11 @@ package org.example.tests.api;
 import io.restassured.response.Response;
 import org.example.api.AuthApi;
 import org.example.constants.FrameworkConstants;
-import org.example.driver.DriverManager;
 import org.example.utils.LogUtils;
-import org.openqa.selenium.Cookie;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class ApiAuthTest {
+public class AuthApiTest {
     @Test(priority = 1, description = "Test Register User via API")
     public void testRegisterSuccess() {
         // Call API

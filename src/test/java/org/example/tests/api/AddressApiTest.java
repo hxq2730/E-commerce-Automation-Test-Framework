@@ -2,10 +2,8 @@ package org.example.tests.api;
 
 import io.restassured.response.Response;
 import org.example.api.AddressApi;
-import org.example.api.AuthApi;
-import org.example.constants.FrameworkConstants;
+import org.example.base.AuthBaseTest;
 import org.example.models.ShippingAddress;
-import org.example.models.UserAccount;
 import org.example.utils.LogUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -13,34 +11,21 @@ import org.testng.annotations.Test;
 import java.util.List;
 import java.util.Map;
 
-public class AddressApiTest {
+public class AddressApiTest extends AuthBaseTest {
 
     @Test(description = "API: Verify User can get Address list ")
-    public void testGetAddressListSuccess(){
-        // Login to get access token
-        Response loginResponse = AuthApi.login(FrameworkConstants.DEFAULT_EMAIL, FrameworkConstants.DEFAULT_PASSWORD);
-        String token = loginResponse.jsonPath().getString("access_token");
-
-        // Verify Token not null
-        Assert.assertNotNull(token, "Login failed, Token is null");
-
+    public void testGetAddressListSuccess() {
         // Get list address
         Response getListAddress = AddressApi.getShippingAddressList(token);
         Assert.assertEquals(getListAddress.getStatusCode(), 200, "Status code mismatch!");
         Assert.assertTrue(getListAddress.jsonPath().getBoolean("success"), "Get list address failed!");
     }
+
     @Test(description = "API: Verify User can add new shipping address via API")
-    public void testAddShippingAddressSuccess(){
+    public void testAddShippingAddressSuccess() {
 //        UserAccount user = new UserAccount();
 //        AuthApi.register(user);
 //        AuthApi.login(user.getEmail(), user.getPassword());
-
-        // Alternative way because API Register was error.
-        Response loginResponse = AuthApi.login(FrameworkConstants.DEFAULT_EMAIL, FrameworkConstants.DEFAULT_PASSWORD);
-        String token = loginResponse.jsonPath().getString("access_token");
-
-        // Verify Token not null
-        Assert.assertNotNull(token, "Login failed, Token is null");
 
         // Add new shipping address
         ShippingAddress shippingAddress = new ShippingAddress();
@@ -58,24 +43,29 @@ public class AddressApiTest {
         Assert.assertEquals(getListAddress.getStatusCode(), 200, "Status code mismatch!");
         Assert.assertTrue(getListAddress.jsonPath().getBoolean("success"), "Get list address failed!");
 
-        // Verify list address contains new shipping address
+        // Verify list address contains new shipping address and get its ID
         List<Map<String, Object>> listData = getListAddress.jsonPath().getList("data");
-        Assert.assertTrue(listData.stream().anyMatch(address -> address.get("address").equals(shippingAddress.getAddress())),
-                "New shipping address not found in list!");
+        int createdAddressId = 0;
+        boolean found = false;
+        
+        for (Map<String, Object> address : listData) {
+            if (address.get("address").equals(shippingAddress.getAddress())) {
+                createdAddressId = (Integer) address.get("id");
+                found = true;
+                break;
+            }
+        }
+        
+        Assert.assertTrue(found, "New shipping address not found in list!");
         LogUtils.info("Test Passed: Address added and verified new shipping address found in list!");
+
+        // Teardown
+        AddressApi.deleteShippingAddress(token, createdAddressId);
     }
 
-
-
     @Test(description = "API: Verify User can delete shipping address via API (CRUD: Add -> Get -> Delete Address)")
-    public void testDeleteShippingAddressSuccess(){
-        // Login
-        Response loginResponse = AuthApi.login(FrameworkConstants.DEFAULT_EMAIL, FrameworkConstants.DEFAULT_PASSWORD);
-        String token = loginResponse.jsonPath().getString("access_token");
-        // Verify Token not null
-        Assert.assertNotNull(token, "Login failed, Token is null");
-
-        // Add address
+    public void testDeleteShippingAddressSuccess() {
+        // Add an address to delete
         ShippingAddress shippingAddress = new ShippingAddress();
         LogUtils.info("Adding new shipping address: " + shippingAddress.getAddress());
         Response addressResponse = AddressApi.addShippingAddress(token, shippingAddress);
@@ -93,8 +83,8 @@ public class AddressApiTest {
         int addressIdToDelete = 0;
         boolean found = false;
 
-        for (Map<String, Object> item: listData){
-            if (item.get("address").equals(shippingAddress.getAddress())){
+        for (Map<String, Object> item : listData) {
+            if (item.get("address").equals(shippingAddress.getAddress())) {
                 addressIdToDelete = (Integer) item.get("id");
                 found = true;
                 break;
@@ -107,7 +97,8 @@ public class AddressApiTest {
         // Delete a shipping address
         Response deleteResponse = AddressApi.deleteShippingAddress(token, addressIdToDelete);
         Assert.assertEquals(deleteResponse.getStatusCode(), 200, "Delete shipping address Status code mismatch!");
-        Assert.assertTrue(deleteResponse.jsonPath().getString("message").contains("deleted"), "Delete shipping address failed!");
+        Assert.assertTrue(deleteResponse.jsonPath().getString("message").contains("deleted"), "Delete shipping " +
+                "address failed!");
 
         // Verify deleted successfully
         Response finalGetListAddressResponse = AddressApi.getShippingAddressList(token);
@@ -122,13 +113,7 @@ public class AddressApiTest {
     }
 
     @Test(description = "API: Verify User can delete all shipping address")
-    public void testDeleteAllShippingAddressSuccess(){
-        // Login
-        Response loginResponse = AuthApi.login(FrameworkConstants.DEFAULT_EMAIL, FrameworkConstants.DEFAULT_PASSWORD);
-        String token = loginResponse.jsonPath().getString("access_token");
-        // Verify Token not null
-        Assert.assertNotNull(token, "Login failed, Token is null");
-
+    public void testDeleteAllShippingAddressSuccess() {
         LogUtils.info("Getting all addresses to delete...");
         Response getListAddressResponse = AddressApi.getShippingAddressList(token);
         Assert.assertEquals(getListAddressResponse.getStatusCode(), 200, "Get list address Status code mismatch!");
@@ -143,14 +128,15 @@ public class AddressApiTest {
         }
 
         // Delete all
-        for (Map<String, Object> item: addressList){
+        for (Map<String, Object> item : addressList) {
             int addressIdToDelete = (Integer) item.get("id");
             String addressName = (String) item.get("address");
-            LogUtils.info("Deleting address ID: "+ addressIdToDelete + " - " + addressName);
+            LogUtils.info("Deleting address ID: " + addressIdToDelete + " - " + addressName);
 
             Response deleteResponse = AddressApi.deleteShippingAddress(token, addressIdToDelete);
             Assert.assertEquals(deleteResponse.getStatusCode(), 200, "Delete shipping address Status code mismatch!");
-            Assert.assertTrue(deleteResponse.jsonPath().getString("message").contains("deleted"), "Delete shipping address failed!");
+            Assert.assertTrue(deleteResponse.jsonPath().getString("message").contains("deleted"), "Delete shipping " +
+                    "address failed!");
         }
 
         // Verify address list is empty
@@ -163,13 +149,7 @@ public class AddressApiTest {
     }
 
     @Test(description = "Verify User can update a shipping address (Flow: Create -> Get ID -> Update -> Verify)")
-    public void testUpdateShippingAddressSuccess(){
-        // Login
-        Response loginResponse = AuthApi.login(FrameworkConstants.DEFAULT_EMAIL, FrameworkConstants.DEFAULT_PASSWORD);
-        String token = loginResponse.jsonPath().getString("access_token");
-        // Verify Token not null
-        Assert.assertNotNull(token, "Login failed, Token is null");
-
+    public void testUpdateShippingAddressSuccess() {
         // Create a new address
         ShippingAddress newAddress = new ShippingAddress();
         LogUtils.info("Adding new shipping address: " + newAddress.getAddress());
@@ -217,6 +197,6 @@ public class AddressApiTest {
         Assert.assertTrue(isUpdated, "FAILED: Address ID " + addressId + " was not updated correctly in the list.");
         LogUtils.info("Test Passed: Address updated successfully!");
         // Teardown
-        //AddressApi.deleteShippingAddress(token, addressId);
+        AddressApi.deleteShippingAddress(token, addressId);
     }
 }

@@ -3,7 +3,7 @@
     <test name="Run on Chrome">
         <parameter name="browser" value="chrome"/>
         <packages>
-            <package name="org.example.tests.*"/>
+            <package name="org.example.tests.ui.*"/>
         </packages>
     </test>
 

@@ -100,7 +100,7 @@ public class CartApiTest extends AuthBaseTest {
         // This test documents the current behavior and should be updated when API is fixed
         LogUtils.info("API Response - Result: " + result + ", Message: " + message);
         
-        // For now, I verify the message indicates the issue rather than the result field
+        // API wrong, return true even for invalid IDs
         Assert.assertTrue(message.toLowerCase().contains("wrong") || message.toLowerCase().contains("failed") || message.toLowerCase().contains("not found"),
                 "Failed: Message should indicate failure. Actual: " + message);
 

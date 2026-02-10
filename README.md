@@ -1,19 +1,21 @@
 # 🚀 Selenium Automation Framework
 
-![Build Status](https://github.com/hxq2730//E-commerce-Automation-Test-Framework/actions/workflows/main.yml/badge.svg) ![Java](https://img.shields.io/badge/Java-17-orange) ![Selenium](https://img.shields.io/badge/Selenium-4.38-green) ![TestNG](https://img.shields.io/badge/TestNG-7.10-blue)
+![Java](https://img.shields.io/badge/Java-17-orange) ![Selenium](https://img.shields.io/badge/Selenium-4.38-green) ![TestNG](https://img.shields.io/badge/TestNG-7.10-blue) ![Rest-Assured](https://img.shields.io/badge/Rest_Assured-5.3-purple)
 
 ## 📖 Introduction
 
-This repository contains a robust Automation Testing Framework designed to test the **CMS Anh Tester** e-commerce platform. The framework is built using **Java**, **Selenium WebDriver**, and **TestNG**, following the **Page Object Model (POM)** design pattern for maintainability and scalability.
+This repository contains a robust **Hybrid Automation Testing Framework** designed to test the **CMS Anh Tester** e-commerce platform. The framework is built using **Java**, combining **Selenium WebDriver** for UI testing and **Rest-Assured** for API testing, and **TestNG**, following the **Page Object Model (POM)** design pattern for maintainability and scalability.
 
 It integrates **Data Driven Testing (DDT)** using Excel files and generates detailed **Allure Reports**. The project is fully automated with **CI/CD via GitHub Actions**.
 
 ## 🛠 Tech Stack & Tools
 
--   **Language:** Java (JDK 17)
--   **Core Library:** Selenium WebDriver
+-   **Language:** Java (JDK 17+)
+-   **UI Automation:** Selenium WebDriver
+-   **API Automation:** Rest-Assured
 -   **Test Runner:** TestNG
 -   **Build Tool:** Maven
+- **JSON Parsing:** Jackson Databind / GSON
 -   **Reporting:** Allure Report
 -   **Data Handling:** Apache POI (Excel)
 -   **Logging:** Log4j2
@@ -21,10 +23,13 @@ It integrates **Data Driven Testing (DDT)** using Excel files and generates deta
 
 ## ✨ Key Features
 
+-   **Hybrid Testing:** Seamless integration of UI (Frontend) and API (Backend) testing in one project.
+-   **API Coverage:** Comprehensive CRUD testing for Auth, Products, Cart, and Orders using POJO classes.
 -   **Page Object Model (POM):** Clean separation between test logic and UI objects.
--   **Data Driven Testing:** Run tests with multiple data sets from Excel files (`src/test/resources/testdata/excel`).
+-   **Data Driven Testing:** Run tests with multiple data sets from Excel files.
 -   **Cross-Browser Testing:** Supports Chrome, Edge, and Firefox.
 -   **Parallel Execution:** Configured to run tests in parallel to reduce execution time.
+-   **Dynamic Configuration:** Run tests via Maven Profiles (API-only, UI-only, or Regression).
 -   **Headless Execution:** Optimized for CI/CD environments with auto-screen resolution handling.
 -   **Automatic Reporting:** Generates Allure HTML reports and deploys to GitHub Pages.
 
@@ -35,17 +40,21 @@ src
 ├── main
 │   └── java
 │       └── org.example
+│           ├── api         # API Endpoints (AuthApi, CartApi, ProductApi...)
 │           ├── constants   # FrameworkConstants
 │           ├── driver      # DriverManager (Singleton & ThreadLocal)
 │           ├── helpers     # ExcelHelper, CaptureHelper...
+│           ├── models      # POJO classes for API responses
 │           ├── pages       # Page Classes (POM)
 │           └── utils       # LogUtils
 └── test
     ├── java
-    │   └── org.example
+    │   └── org.example    │       
     │       ├── base        # BaseTest
     │       ├── listeners   # Test Listener
     │       └── tests       # Test Classes (LoginTest, CheckoutTest...)
+    │           ├── api         # API Test Classes (CartApiTest, OrderApiTest...)
+    │           └── ui          # UI Test Classes (LoginTest, CheckoutTest...)
     └── resources
         ├── config          # config.properties
         ├── suites          # TestNG XML Suites
@@ -71,15 +80,25 @@ https://github.com/hxq2730/E-commerce-Automation-Test-Framework.git
 cd E-commerce-Automation-Test-Framework
 ```
 
-### 2. Run all tests (Regression Suite)
+### 2. Run API Tests Only
 
-You can run the tests using the configured TestNG XML suite:
+Fast execution to verify backend stability.
 
 ```bash
-mvn clean test -DsuiteXmlFile=src/test/resources/suites/testng.xml
+mvn clean test -Papi
+```
+### 3. Run UI Tests Only
+End-to-End user flow testing.
+
+```bash
+mvn clean test -Pui
 ```
 
+### 4. Run Full Regression (API + UI)
 
+```bash
+mvn clean test -Pregression
+```
 ## 📊 Test Reports
 
 ### Local Report
@@ -100,7 +119,8 @@ This project uses **GitHub Actions** for Continuous Integration:
 
 1.  **Trigger:** Pushes to `main` branch or Scheduled daily at 7:00 AM (GMT+7).
 2.  **Environment:** Ubuntu Latest + Java 17 + Chrome (Headless).
-3.  **Execution:** Runs Maven Test using `testng.xml`.
+3.  **Stage 1 - API Tests:** Runs testng-api.xml.
+3.  **Stage 2 - UI Tests:** Runs testng-ui.xml (Headless Chrome).
 4.  **Reporting:** Generates Allure HTML report.
 5.  **Deployment:** Deploys the report to the `gh-pages` branch.
 

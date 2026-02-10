@@ -1,0 +1,7 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Full Regression Suite" verbose="1" parallel="tests" thread-count="2">
+    <suite-files>
+        <suite-file path="./testng-api.xml"/>
+        <suite-file path="./testng-ui.xml"/>
+    </suite-files>
+</suite>

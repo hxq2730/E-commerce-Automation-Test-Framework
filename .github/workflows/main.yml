@@ -32,13 +32,14 @@ jobs:
       - name: Run API Tests
         id: api-test
         continue-on-error: true
-        run: mvn test -DsuiteXmlFile=src/test/resources/suites/testng-api.xml
+        run: mvn test -Papi
 
       # 4. Run UI Test
       - name: Run UI Tests
         id: ui-test
+        if: success() || failure()
         continue-on-error: true
-        run: mvn test -DsuiteXmlFile=src/test/resources/suites/testng-ui.xml
+        run: mvn test -Pui
 
       #5. Generate Allure Report
       - name: Generate Allure Report

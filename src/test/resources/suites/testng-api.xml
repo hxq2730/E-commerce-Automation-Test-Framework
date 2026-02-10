@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="API Testing">
-    <test name="Run API Tests">
+<suite name="API Regression Suite">
+    <test name="Core API Tests">
         <packages>
             <package name="org.example.tests.api.*"/>
         </packages>

@@ -1,0 +1,1 @@
+{"total":2,"items":[{"uid":"0b3dc2485f7e068a04b4fc691c6f2d4c","name":"API Regression Suite","statistic":{"failed":8,"broken":0,"skipped":0,"passed":8,"unknown":0,"total":16}},{"uid":"76727fa2be9363b8ae8922e5b96af084","name":"UI Regression Suite","statistic":{"failed":1,"broken":5,"skipped":0,"passed":15,"unknown":0,"total":21}}]}
